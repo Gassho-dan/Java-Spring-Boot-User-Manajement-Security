@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Add New Members</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-default" style="margin-bottom: 0px;">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Your Company</a>
+    </div>
+    <div style="margin-right:10px;">
+
+      <p class="navbar-text">Signed in as [[${#request.userPrincipal.principal.username}]]</p>
+      <form th:action="@{/admin/logout}" method="post">
+        <button type="submit" class="btn btn-default navbar-btn navbar-right"> <span class="glyphicon glyphicon-log-out"></span> Sign Out</button>
+      </form>
+
+    </div>
+  </div>
+</nav>
+<div class="container-fluid">
+  <div class="text-center"><h2>Manage Member</h2></div>
+
+  <div th:if="${massage}" class="alert alert-success text-center">
+    [[${massage}]]
+  </div>
+
+  <div style="margin-bottom: 10px;">
+    <a class="btn btn-primary" th:href="@{/admin/member/new}" role="button"> <span class="glyphicon glyphicon-plus"></span> Add New Member</a>
+    <a class="btn btn-success" th:href="@{/admin/member/export/excel}" role="button"><span class="glyphicon glyphicon-save-file"></span> Export Excel</a>
+    <a class="btn btn-default" th:href="@{/admin/member/export/pdf}" role="button"><span class="glyphicon glyphicon-save-file"></span> Export PDF</a>
+  </div>
+
+  <div>
+    <table class="table table-bordered">
+      <thead class="thead-dark">
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Password</th>
+        <th>Handphone</th>
+        <th>Born</th>
+        <th>Email</th>
+        <th>Gender</th>
+        <th>Number KTP</th>
+        <th>Photo</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <th:block th:each="member: ${memberList}">
+        <tr>
+          <td>[[${member.id}]]</td>
+          <td>[[${member.nama}]]</td>
+          <td>[[${member.password}]]</td>
+          <td>[[${member.no_hp}]]</td>
+          <td>[[${member.tgl_lahir}]]</td>
+          <td>[[${member.email}]]</td>
+          <td>[[${member.jk}]]</td>
+          <td>[[${member.no_ktp}]]</td>
+          <td>[[${member.foto}]]</td>
+          <td>
+            <a class="btn btn-sm btn-info" th:href="@{'/admin/member/edit/' + ${member.id}}"> <span class="glyphicon glyphicon-edit"></span></a>
+            <a class="btn btn-sm btn-danger" th:href="@{'/admin/member/delete/' + ${member.id}}"> <span class="glyphicon glyphicon-trash"></span></a>
+          </td>
+        </tr>
+      </th:block>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>
